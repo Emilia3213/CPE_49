@@ -1,0 +1,37 @@
+"""
+UVA 11349 - Symmetric Matrix
+
+題目中文意思：
+判斷 n*n 矩陣是否對中心對稱，且所有元素不可為負。
+
+這題需要什麼資料：
+第一行測資數；每組格式 `N = n` 後接 n*n 個整數。
+
+解法重點：
+把矩陣攤平成 list，檢查每個值 >=0 且 arr[i] == arr[-1-i]。
+
+寫程式時可以照這個順序想：
+1. 先把輸入讀進來，確認是一行一組、第一行有測資數，還是讀到 EOF。
+2. 把題目要的規則轉成變數、迴圈、判斷式或函式。
+3. 按照題目指定格式輸出，CPE/UVA 很常因為空格、空行、大小寫錯而 WA。
+"""
+
+# ===== 程式開始 =====
+# 下面保留可以直接提交的 Python 解答。
+# 註解會寫「這行在做什麼」以及「為什麼要這樣做」，
+# 你用 Cursor 看時，可以先讀上面的題目說明，再對照下面程式。
+
+# 匯入 sys：CPE/UVA 常用 sys.stdin 讀輸入，速度快，也能自然讀到 EOF。
+import sys
+
+tokens = sys.stdin.read().replace("=", " ").split()
+t = int(tokens[0])
+p = 1
+# for 迴圈用來逐筆處理測資、逐格檢查，或跑完整個範圍。
+for case in range(1, t + 1):
+    p += 1  # 跳過 N
+    n = int(tokens[p]); p += 1
+    arr = list(map(int, tokens[p:p+n*n])); p += n*n
+    ok = all(x >= 0 for x in arr) and arr == arr[::-1]
+    # print 負責輸出答案；字串格式要完全符合題目，空格和大小寫都很重要。
+    print(f"Test #{case}: {'Symmetric.' if ok else 'Non-symmetric.'}")
